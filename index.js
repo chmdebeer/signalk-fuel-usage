@@ -119,6 +119,13 @@ module.exports = function (app) {
   let _start = function(options) {
     app.debug(`${plugin.name} Started...`)
 
+    if (!options.savedUsage) {
+      options.savedUsage = {
+        port: 0,
+        starboard: 0
+      };
+    }
+
     let putActionHandler = function (context, path, value, callback) {
       for (const [key, value] of Object.entries(record)) {
         app.debug(`Resetting ${key}`);
