@@ -1,6 +1,6 @@
 {
   "name": "signalk-fuel-usage",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Signalk plugin to calculate your fuel usage based on propulsion.*.fuel.rate",
   "main": "index.js",
   "scripts": {

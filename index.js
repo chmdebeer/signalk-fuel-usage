@@ -43,6 +43,29 @@ module.exports = function (app) {
     return options
   }
 
+  let sendData = function(instance) {
+    const dst = 255;
+    const pgn = {
+      pgn: 127497,
+      dst: dst,
+    };
+
+    let trip = app.signalk.self.propulsion[instance].trip;
+
+    if (!trip) {
+      return;
+    }
+
+    instance == 'port' ? pgn['Instance'] = 0 : pgn['Instance'] = 1;
+    pgn['Trip Fuel Used'] = (trip.fuelUsed.value * 1000);
+    pgn['Fuel Rate, Average'] = 0;
+    pgn['Fuel Rate, Economy'] = 0;
+    pgn['Instantaneous Fuel Economy'] = 0;
+    // app.debug('sending %j', pgn)
+    // app.debug('sending update');
+    app.emit('nmea2000JsonOut', pgn)
+  }
+
   let updateDelta = function() {
     for (const [key, value] of Object.entries(record)) {
       timeTrigger = Date.now() - value.fuelUsedTime
@@ -60,7 +83,8 @@ module.exports = function (app) {
           ]
         })
       }
-    }
+      sendData(key);
+     }
   }
 
   let _localSubscription = function(options) {
