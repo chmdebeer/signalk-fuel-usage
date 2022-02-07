@@ -50,11 +50,11 @@ module.exports = function (app) {
       dst: dst,
     };
 
-    let trip = app.signalk.self.propulsion[instance].trip;
-
-    if (!trip) {
+    if ((!app.signalk.self.propulsion[instance]) || (!app.signalk.self.propulsion[instance].trip)) {
       return;
     }
+    
+    let trip = app.signalk.self.propulsion[instance].trip;
 
     instance == 'port' ? pgn['Instance'] = 0 : pgn['Instance'] = 1;
     pgn['Trip Fuel Used'] = (trip.fuelUsed.value * 1000);
