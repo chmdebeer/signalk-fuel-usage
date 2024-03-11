@@ -50,7 +50,7 @@ module.exports = function (app) {
       dst: dst,
     };
 
-    if ((!app.signalk.self.propulsion[instance]) || (!app.signalk.self.propulsion[instance].trip)) {
+    if ((instance == undefined) || (!app.signalk.self.propulsion) || (!app.signalk.self.propulsion[instance]) || (!app.signalk.self.propulsion[instance].trip)) {
       return;
     }
     
